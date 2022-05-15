@@ -77,6 +77,7 @@ VER_NT_SERVER = 3
 # Linux specific releases, caching them since they are execution invariants
 _IS_ORACLE_LINUX = os.path.exists('/etc/oracle-release')
 _IS_REDHAT_LINUX = os.path.exists('/etc/redhat-release')
+_IS_KYLIN_LINUX = os.path.exists('/etc/kylin-release')
 
 OS_RELEASE_FILE = "/etc/os-release"
 
@@ -86,7 +87,10 @@ def _is_oracle_linux():
 def _is_redhat_linux():
   return _IS_REDHAT_LINUX
 
-def _is_powerpc():
+def _is_kylin_linux():
+  return _IS_KYLIN_LINUX
+
+ef _is_powerpc():
   return platform.processor() == 'powerpc' or platform.machine().startswith('ppc')
 
 def advanced_check(distribution):
@@ -201,6 +205,9 @@ class OSCheck:
         distribution = platform.dist()
       elif _is_redhat_linux():
         distribution = platform.dist()
+      # hack, map kylinv10 to redhat7 family which defiled in os_family.json
+      elif _is_kylin_linux():
+        distribution = ('kylin', '7.9.2009', 'Core' )
       else:
         distribution = platform.linux_distribution()
         

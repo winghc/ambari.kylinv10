@@ -14,7 +14,9 @@
           "slc",
           "scientific",
           "psbm",
-          "centos linux"
+          "centos linux",
+          "kylin linux",
+          "kylin"
         ],
         "versions": [
           6,
